@@ -5,7 +5,8 @@ import PokemonList from "../components/PokemonList";
 
 export default function Pokedex() {
   const [pokemons, setPokemons] = useState([]);
-  const [ nextUrl, setNextUrl ] = useState(null);
+  const [nextUrl, setNextUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -15,12 +16,15 @@ export default function Pokedex() {
 
   const loadPokemons = async () => {
     try {
-      const response = await getPokemonsApi(nextUrl);
-      setNextUrl(response.next);
+      setLoading(true);
+      const { results: pokemonsResponse, next: nextPokemonListUrl } =
+        await getPokemonsApi(nextUrl);
+
+      setNextUrl(nextPokemonListUrl);
 
       const pokemonsArray = [];
       // Creamos un bucle asincrono que devuelva los resultados
-      for await (const pokemon of response.results) {
+      for await (const pokemon of pokemonsResponse) {
         // Obtenemos la url del pokemon
         const pokemonDetails = await getPokemonDetailsByUrlApi(pokemon.url);
 
@@ -38,12 +42,19 @@ export default function Pokedex() {
       setPokemons([...pokemons, ...pokemonsArray]);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <SafeAreaView>
-      <PokemonList pokemons={pokemons} loadPokemons={loadPokemons} isNext={nextUrl} />
+      <PokemonList
+        pokemons={pokemons}
+        loadPokemons={loadPokemons}
+        isNext={nextUrl}
+        isLoading={loading}
+      />
     </SafeAreaView>
   );
 }
