@@ -46,7 +46,7 @@ export default function Pokemon(props) {
     <ScrollView>
       <Header
         name={pokemon.name}
-        order={pokemon.order}
+        id={pokemon.id}
         image={pokemon.sprites.other["official-artwork"].front_default}
         type={pokemon.types[0].type.name}
       />

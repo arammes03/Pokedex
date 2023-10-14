@@ -5,7 +5,7 @@ import name from "../../utils/getColorByPokemonType";
 import getColorByPokemonType from "../../utils/getColorByPokemonType";
 
 export default function Header(props) {
-  const { name, order, image, type } = props;
+  const { name, id, image, type } = props;
   const color = getColorByPokemonType(type);
 
   const bgStyles = { backgroundColor: color, ...styles.bgStyles };
@@ -17,7 +17,7 @@ export default function Header(props) {
       <SafeAreaView style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.name}>{capitalize(name)}</Text>
-          <Text style={styles.order}>#{`${order}`.padStart(3, 0)}</Text>
+          <Text style={styles.order}>#{`${id}`.padStart(3, 0)}</Text>
         </View>
         <View style={styles.contentImg}>
           <Image source={{ uri: image }} style={styles.image} />
