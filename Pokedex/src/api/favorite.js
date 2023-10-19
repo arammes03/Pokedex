@@ -32,3 +32,13 @@ export async function isPokemonFavoriteApi(id) {
     throw error; // Lanzamos el error
   }
 }
+
+export async function removePokemonFavoriteApi(id) {
+  try {
+    const favorites = await getPokemonsFavoriteApi(); // LLamamos a la función que nos retorna nuestros pokemons favs
+    const newFavorites = pull(favorites, id); // Nos devuelve la lista ya actualizada sin el id del pokemon que hemos borrado de favs
+    await AsyncStorage.setItem(FAVORITE_STORAGE, JSON.stringify(newFavorites)); // Seteamos los ids actualizamos en el storage
+  } catch (error) {
+    throw error; // Lanzamos el error
+  }
+}
