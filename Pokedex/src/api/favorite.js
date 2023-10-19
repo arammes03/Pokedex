@@ -22,3 +22,13 @@ export async function addPokemonFavoriteApi(id) {
     throw error; // Lanzamos el error
   }
 }
+
+// Función que obtiene el listado de pokemons favs y +comprueba si ese id existe ya en la lista
+export async function isPokemonFavoriteApi(id) {
+  try {
+    const response = await getPokemonsFavoriteApi(); // Llamamos a la función que nos retorna nuestros pokemons favs
+    return includes(response, id); // Buscamos dentro de la lista ese id
+  } catch (error) {
+    throw error; // Lanzamos el error
+  }
+}
