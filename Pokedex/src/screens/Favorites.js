@@ -5,6 +5,7 @@ import { getPokemonsFavoriteApi } from "../api/favorite";
 import useAuth from "../hooks/useAuth";
 import { getPokemonDetailsApi } from "../api/pokemon";
 import PokemonList from "../components/PokemonList";
+import NoLogged from "../components/NoLogged";
 
 export default function Favorites() {
   const [pokemons, setPokemons] = useState([]);
@@ -39,9 +40,5 @@ export default function Favorites() {
     }, [auth])
   );
 
-  return !auth ? (
-    <Text>Inicia sesión para acceder a esta ventana</Text>
-  ) : (
-    <PokemonList pokemons={pokemons} />
-  );
+  return !auth ? <NoLogged /> : <PokemonList pokemons={pokemons} />;
 }
